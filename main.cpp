@@ -29,6 +29,11 @@
 
 #include "Audio.h"
 
+#include "fbxsdk.h"
+#include "FbxLoader.h"
+
+
+
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "d3dcompiler.lib")
@@ -36,185 +41,7 @@
 
 using namespace Microsoft::WRL;
 
-//#include <d2d1_1.h>
-//#pragma comment(lib, "d2d1.lib")
-
-//#include <dsound.h>
-//#pragma comment(lib, "dsound.lib")
-//#pragma comment(lib, "dxguid.lib")
-//#pragma comment(lib, "winmm.lib")
-
 using namespace DirectX;
-
-//スプライト用テクスチャ枚数
-//const int spriteSRVCount = 524;
-
-
-
-
-
-
-
-//struct ChunkHeader
-//{
-//	char id[4];
-//	int32_t size;
-//};
-//
-//struct RiffHeader
-//{
-//	ChunkHeader chunk;
-//	char type[4];
-//
-//};
-//
-//struct FormatChunk
-//{
-//	ChunkHeader chunk;
-//	WAVEFORMATEX fmt;
-//};
-//
-//struct SoundData
-//{
-//	WAVEFORMATEX wfex;
-//
-//	BYTE* pBuffer;
-//
-//	unsigned int bufferSize;
-//
-//
-//};
-//
-//SoundData SoundLoadWave(const char* filename)
-//{
-//	HRESULT result;
-//
-//	//File open
-//	std::ifstream file;
-//
-//	file.open(filename, std::ios_base::binary);
-//
-//	assert(file.is_open());
-//
-//	//wavData Load
-//	RiffHeader riff;
-//	file.read((char*)&riff, sizeof(riff));
-//
-//	if (strncmp(riff.chunk.id, "RIFF", 4) != 0)
-//	{
-//		assert(0);
-//	}
-//
-//	if (strncmp(riff.type, "WAVE", 4) != 0)
-//	{
-//		assert(0);
-//	}
-//
-//	FormatChunk format = {};
-//
-//	file.read((char*)&format, sizeof(ChunkHeader));
-//	if (strncmp(format.chunk.id, "fmt ", 4) != 0)
-//	{
-//		assert(0);
-//	}
-//
-//	assert(format.chunk.size <= sizeof(format.fmt));
-//	file.read((char*)&format.fmt, format.chunk.size);
-//
-//
-//
-//	ChunkHeader data;
-//	file.read((char*)&data, sizeof(data));
-//
-//	if (strncmp(data.id, "JUNK", 4) == 0)
-//	{
-//		file.seekg(data.size, std::ios_base::cur);
-//
-//		file.read((char*)&data, sizeof(data));
-//	}
-//
-//	if (strncmp(data.id, "LIST", 4) == 0)
-//	{
-//		file.seekg(data.size, std::ios_base::cur);
-//
-//		file.read((char*)&data, sizeof(data));
-//	}
-//
-//	if (strncmp(data.id, "data", 4) != 0)
-//	{
-//		assert(0);
-//	}
-//
-//	char* pBuffer = new char[data.size];
-//	file.read(pBuffer, data.size);
-//
-//	file.close();
-//	//File close
-//
-//	//return
-//	SoundData soundData = {};
-//
-//	soundData.wfex = format.fmt;
-//	soundData.pBuffer = reinterpret_cast<BYTE*>(pBuffer);
-//	soundData.bufferSize = data.size;
-//
-//
-//
-//	return soundData;
-//}
-//
-//void SoundUnload(SoundData* soundData)
-//{
-//	delete[] soundData->pBuffer;
-//
-//	soundData->pBuffer = 0;
-//	soundData->bufferSize = 0;
-//	soundData->wfex = {};
-//}
-//
-//void SoundPlayWave(IXAudio2* xAudio2, const SoundData& soundData)
-//{
-//	HRESULT result;
-//
-//	IXAudio2SourceVoice* pSourceVoice = nullptr;
-//	result = xAudio2->CreateSourceVoice(&pSourceVoice, &soundData.wfex);
-//	assert(SUCCEEDED(result));
-//
-//	XAUDIO2_BUFFER buf{};
-//	buf.pAudioData = soundData.pBuffer;
-//	buf.AudioBytes = soundData.bufferSize;
-//	buf.Flags = XAUDIO2_END_OF_STREAM;
-//	// buf.AudioBytes = size;
-//
-//	result = pSourceVoice->SubmitSourceBuffer(&buf);
-//	result = pSourceVoice->Start();
-//}
-//
-//void SoundPlayWaveLoop(IXAudio2* xAudio2, const SoundData& soundData)
-//{
-//	HRESULT result;
-//
-//	IXAudio2SourceVoice* pSourceVoice = nullptr;
-//	result = xAudio2->CreateSourceVoice(&pSourceVoice, &soundData.wfex);
-//	assert(SUCCEEDED(result));
-//
-//	XAUDIO2_BUFFER buf{};
-//	buf.pAudioData = soundData.pBuffer;
-//	buf.AudioBytes = soundData.bufferSize;
-//	buf.LoopCount = XAUDIO2_LOOP_INFINITE;
-//	buf.Flags = XAUDIO2_END_OF_STREAM;
-//
-//	// buf.AudioBytes = size;
-//
-//	result = pSourceVoice->SubmitSourceBuffer(&buf);
-//	result = pSourceVoice->Start();
-//}
-
-const XMFLOAT3 ease_inOut(const XMFLOAT3& start, const XMFLOAT3& end, float t)
-{
-	t = t * t * (3 - 2 * t);
-	return XMFLOAT3({ start.x * (1.0f - t) + end.x * t, start.y * (1.0f - t) + end.y * t, start.z * (1.0f - t) + end.z * t });
-}
 
 
 // Windowsアプリでのエントリーポイント(main関数)
@@ -224,7 +51,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 // WindowsAPI初期化処理
 	
-
+	
 	Win* win = nullptr;
 	Input* input = nullptr;
 	DirectXCommon* dxcommon = nullptr;
@@ -251,6 +78,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	input = new Input();
 	input->Initialize(win);
 
+	FbxManager* fbxManager = FbxManager::Create();
+
+	FbxLoader::GetInstance()->Init(dxcommon->GetDev());
+
 	// DirectX初期化処理　ここまで
 
 	//描画初期化処理　ここから
@@ -276,6 +107,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//音声読み込み
 	audio->LoadWave("powerdown07.wav");
 
+	
 
 
 #pragma region model
@@ -379,6 +211,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//球の初期値を設定
 	sphere.center = XMVectorSet(0, -10, -5, 1);//中心点座標
 	sphere.radius = 10.0f;//半径
+
+
+	FbxLoader::GetInstance()->LoadModelFile("cube");
 
 #pragma endregion
 	//描画初期化処理　ここまで
@@ -646,6 +481,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	delete sprite;
 	delete spriteCommon;
+	FbxLoader::GetInstance()->Finalize();
 	delete dxcommon;
 	delete input;
 	
