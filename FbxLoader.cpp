@@ -96,6 +96,26 @@ void FbxLoader::ParseNodeRecursive(ModelFbx* modelFbx, FbxNode* fbxNode, Node* p
     }
 }
 
+void FbxLoader::ParseMesh(ModelFbx* modelFbx, FbxNode* fbxNode)
+{
+}
+
+void FbxLoader::ParseMeshVertices(ModelFbx* modelFbx, FbxMesh* fbxMesh)
+{
+}
+
+void FbxLoader::ParseMeshFaces(ModelFbx* modelFbx, FbxMesh* fbxMesh)
+{
+}
+
+void FbxLoader::ParseMaterial(ModelFbx* modelFbx, FbxMesh* fbxMesh)
+{
+}
+
+void FbxLoader::LoadTexture(ModelFbx* modelFbx, const std::string& fullPath)
+{
+}
+
 void FbxLoader::LoadModelFile(const string& modelName)
 {
     //モデルと同じ名前のフォルダから読み込む

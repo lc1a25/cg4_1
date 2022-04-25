@@ -71,5 +71,20 @@ public://定数
 	/// <param name = "parent">親ノード</param>
 	void ParseNodeRecursive(ModelFbx* modelFbx, FbxNode* fbxNode, Node* parent = nullptr);
 
-	
+	/// <summary>
+	///	メッシュ読み取り
+	/// </summary>
+	/// <param name = "model">読み込み先モデルオブジェクト</param>
+	/// <param name = "fbxNode">解析対象のノード</param>
+	void ParseMesh(ModelFbx* modelFbx, FbxNode* fbxNode);
+
+	//頂点座標読み取り
+	void ParseMeshVertices(ModelFbx* modelFbx, FbxMesh* fbxMesh);
+	//面情報読み取り
+	void ParseMeshFaces(ModelFbx* modelFbx, FbxMesh* fbxMesh);
+	//マテリアル読み取り
+	void ParseMaterial(ModelFbx* modelFbx, FbxMesh* fbxMesh);
+	//テクスチャ読み取り
+	void LoadTexture(ModelFbx* modelFbx, const std::string &fullPath);
+
 };

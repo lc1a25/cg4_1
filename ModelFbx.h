@@ -34,4 +34,14 @@ private:
 	std::string name;
 	//ノード配列
 	std::vector<Node> nodes;
+
+public://サブクラス
+	//頂点データ構造体
+	struct VertexPosNormalUv
+	{
+		XMFLOAT3 pos;//xyz座標
+		XMFLOAT3 normal;//法線ベクトル
+		XMFLOAT2 uv;//uv座標
+	};
+
 };
