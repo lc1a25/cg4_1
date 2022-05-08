@@ -83,8 +83,14 @@ public://定数
 	//面情報読み取り
 	void ParseMeshFaces(ModelFbx* modelFbx, FbxMesh* fbxMesh);
 	//マテリアル読み取り
-	void ParseMaterial(ModelFbx* modelFbx, FbxMesh* fbxMesh);
+	void ParseMaterial(ModelFbx* modelFbx, FbxNode* fbxNode);
 	//テクスチャ読み取り
 	void LoadTexture(ModelFbx* modelFbx, const std::string &fullPath);
+
+	//ディレクトリを含んだファイルパスからファイル名を抽出
+	std::string ExtractFileName(const std::string& path);
+
+	//テクスチャがない場合の標準テクスチャファイル名
+	static const string defaultTextureFileName;
 
 };
