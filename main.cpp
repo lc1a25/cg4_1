@@ -32,6 +32,8 @@
 #include "fbxsdk.h"
 #include "FbxLoader.h"
 
+#include "Object3dFbx.h"
+#include "Camera.h"
 
 
 #pragma comment(lib, "d3d12.lib")
@@ -71,6 +73,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	debugtext_minute = new DebugText();
 
 	Object3d::StaticInitialize(dxcommon->GetDev(), win->window_width, win->window_height);
+
+	Object3dFbx::SetDevice(dxcommon->GetDev());
+
+	Camera* camera;
+	camera = new Camera();
+	camera->Init();
+
+	Object3dFbx::SetCamera(camera);
+
+	Object3dFbx::CreateGraphicsPipeline();
 
 	audio = new Audio();
 	audio->Init();
@@ -112,6 +124,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 #pragma region model
 	
+	ModelFbx* modelFbx = nullptr;
+	Object3dFbx* object1 = nullptr;
+
+	modelFbx = FbxLoader::GetInstance()->LoadModelFile("cube");
+	object1 = new Object3dFbx;
+	object1->Init();
+	object1->SetModelFbx(modelFbx);
+
 
 	Object3d* object3d_camera = nullptr;
 
@@ -213,7 +233,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	sphere.radius = 10.0f;//半径
 
 
-	FbxLoader::GetInstance()->LoadModelFile("cube");
+	//FbxLoader::GetInstance()->LoadModelFile("cube");
 
 #pragma endregion
 	//描画初期化処理　ここまで
@@ -258,6 +278,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	sprite->SetTexsize({440.0f,250.0f });
 
 	sprite->TransVertexBuffer();
+
+	XMFLOAT3 eye = camera->GetEye();
 	
 #pragma endregion
 
@@ -281,69 +303,58 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		sprite->Update();
 
+
 		
 		if (gameScene == 1)
 		{
-
+			//camera->SetEye(eye);
+			//camera->SetTarget({ 0,-20,0 });
 			XMVECTOR moveZ = XMVectorSet(0, 0, 1.0f, 0);//z speed
 
 			XMVECTOR moveX2 = XMVectorSet(1.0f, 0, 0, 0);//debug
 
 			if (input->isKey(DIK_W))
 			{
-				if (object3d_player->position.z >= 120.0f)
-				{
-					object3d_player->position.z -= 1.0f;
-					sphere.center -= moveZ;
-				}
-				else
-				{
-					object3d_player->position.z += 1.0f;
-					sphere.center += moveZ;
-				}
+				eye.y+= 0.1f;
+				camera->CameraMoveVector(eye);
+				object3d_camera->CameraMoveVector(eye);
+				
+				
 
 			}
 			if (input->isKey(DIK_S))
 			{
-				if (object3d_player->position.z <= -20.0f)
-				{
-					object3d_player->position.z += 1.0f;
-					sphere.center += moveZ;
-				}
-				else
-				{
-					object3d_player->position.z -= 1.0f;
-					sphere.center -= moveZ;
-				}
+				eye.y-= 0.1f;
+				camera->CameraMoveVector2(eye);
+				object3d_camera->CameraMoveVector2(eye);
+		
 				
 			}
 			if (input->isKey(DIK_A))
 			{
-				if (object3d_player->position.x <= -30.0f)
-				{
-					object3d_player->position.x += 1.0f;
-					sphere.center += moveX2;
-				}
-				else
-				{
-					object3d_player->position.x -= 1.0f;
-					sphere.center -= moveX2;
-				}
-				
+				eye.x-= 0.1f;
+				camera->CameraMoveVector2(eye);
+				object3d_camera->CameraMoveVector(eye);
 			}
 			if (input->isKey(DIK_D))
 			{
-				if (object3d_player->position.x >= +30.0f)
-				{
-					object3d_player->position.x -= 1.0f;
-					sphere.center -= moveX2;
-				}
-				else
-				{
-					object3d_player->position.x += 1.0f;
-					sphere.center += moveX2;
-				}
+				eye.x+= 0.1f;
+				camera->CameraMoveVector(eye);
+				object3d_camera->CameraMoveVector(eye);
 			}
+			if (input->isKey(DIK_Q))
+			{
+				eye.z-= 0.1f;
+				camera->CameraMoveVector2(eye);
+				object3d_camera->CameraMoveVector(eye);
+			}
+			if (input->isKey(DIK_E))
+			{
+				eye.z+= 0.1f;
+				camera->CameraMoveVector(eye);
+			}
+
+
 
 
 			//三角形の初期値を設定
@@ -355,9 +366,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			bool hit_left = Collision::CheckSphere2Triangle(sphere, triangle_ene2);
 
 
-			sprintf_s(moji, "%d", secound);
-			sprintf_s(moji2, "%d", secound2);
-			sprintf_s(moji3, "%d", minute);
+			sprintf_s(moji, "%2.1f", eye.y);
+			sprintf_s(moji2, "%2.1f", eye.x);
+			sprintf_s(moji3, "%2.1f",eye.z);
 		
 
 
@@ -392,10 +403,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 			}
 			debugtext_minute->Print( moji, secound_x, secound_y, 1.0f);
-			debugtext_minute2->Print(moji2, secound2_x, secound2_y, 1.0f);
+			debugtext_minute2->Print(moji2, secound2_x, secound2_y + 60, 1.0f);
+			debugtext_minute2->Print(moji3, secound2_x, secound2_y + 110, 1.0f);
 
 		}
+		camera->UpdateCamera();
 
+		object1->Update();
 
 		object3d_player->Update();
 		object3d_roadCenter->Update();
@@ -418,9 +432,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		// ４．描画コマンドここから
 
 
-		Object3d::PreDraw(dxcommon->GetCmdlist());
+		//Object3d::PreDraw(dxcommon->GetCmdlist());
+
+		object1->Draw(dxcommon->GetCmdlist());
 		
-		object3d_player->Draw();
+		/*object3d_player->Draw();
 		object3d_roadCenter->Draw();
 		object3d_roadCenter2->Draw();
 		object3d_roadCenter3->Draw();
@@ -436,13 +452,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		object3d_homeWhite->Draw();
 		object3d_homeLong->Draw();
 
-		Object3d::PostDraw();
+		Object3d::PostDraw();*/
 
 		////スプライト共通コマンド
 		spriteCommon->PreDraw();
 
 		////スプライト描画
-		sprite->Draw();
+//		sprite->Draw();
 
 
 		debugtext_minute->DrawAll();
@@ -456,6 +472,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	}
 	// ウィンドウクラスを登録解除
 	win->WinFinalize();
+
+	delete modelFbx;
+	delete object1;
 
 	delete object3d_player;
 	delete object3d_roadCenter;

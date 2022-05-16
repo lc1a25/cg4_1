@@ -61,7 +61,8 @@ public://定数
 	///	ファイルからFBXモデルよみこみ
 	/// </summary>
 	/// <param name = "model name">モデル名</param>
-	void LoadModelFile(const string& modelName);
+	//void LoadModelFile(const string& modelName);
+	ModelFbx *LoadModelFile(const string& modelName);
 
 	/// <summary>
 	///	再帰的にノード構成を解析

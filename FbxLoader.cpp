@@ -296,7 +296,7 @@ void FbxLoader::LoadTexture(ModelFbx* modelFbx, const std::string& fullPath)
     }
 }
 
-void FbxLoader::LoadModelFile(const string& modelName)
+ModelFbx* FbxLoader::LoadModelFile(const string& modelName)
 {
     //モデルと同じ名前のフォルダから読み込む
     const string directoryPath = baseDirectory + modelName + "/";
@@ -334,6 +334,8 @@ void FbxLoader::LoadModelFile(const string& modelName)
 
     //FBXシーン解放
     fbxScene->Destroy();
+
+    return modelFbx;
 }
 
 std::string FbxLoader::ExtractFileName(const std::string& path)
