@@ -97,7 +97,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	// DirectX‰Šú‰»ˆ—@‚±‚±‚Ü‚Å
 
 	//•`‰æ‰Šú‰»ˆ—@‚±‚±‚©‚ç
-	spriteCommon->LoadTexture(0, L"Resource/GE3_2.png");
+	spriteCommon->LoadTexture(0, L"Resource/GE3_2.png");//•]‰¿‰Û‘è‚Ìà–¾
 
 	Sprite *sprite = Sprite::Create(spriteCommon,0);
 
@@ -127,7 +127,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	ModelFbx* modelFbx = nullptr;
 	Object3dFbx* object1 = nullptr;
 
-	modelFbx = FbxLoader::GetInstance()->LoadModelFile("cube");
+	modelFbx = FbxLoader::GetInstance()->LoadModelFile("boneTest");
 	object1 = new Object3dFbx;
 	object1->Init();
 	object1->SetModelFbx(modelFbx);
@@ -303,20 +303,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		sprite->Update();
 
-
 		
-		if (gameScene == 1)
-		{
+		
+
 			//camera->SetEye(eye);
 			//camera->SetTarget({ 0,-20,0 });
 			XMVECTOR moveZ = XMVectorSet(0, 0, 1.0f, 0);//z speed
 
 			XMVECTOR moveX2 = XMVectorSet(1.0f, 0, 0, 0);//debug
 
+		
+			object1->PlayAnimation();
+
 			if (input->isKey(DIK_W))
 			{
 				eye.y+= 0.1f;
-				camera->CameraMoveVector(eye);
+				camera->CameraMoveVector({ 0,1,0 });
 				object3d_camera->CameraMoveVector(eye);
 				
 				
@@ -324,8 +326,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			}
 			if (input->isKey(DIK_S))
 			{
-				eye.y-= 0.1f;
-				camera->CameraMoveVector2(eye);
+				
+				camera->CameraMoveVector2({ 0,1,0 });
 				object3d_camera->CameraMoveVector2(eye);
 		
 				
@@ -333,25 +335,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			if (input->isKey(DIK_A))
 			{
 				eye.x-= 0.1f;
-				camera->CameraMoveVector2(eye);
+				camera->CameraMoveVector2({ 1,0,0 });
 				object3d_camera->CameraMoveVector(eye);
 			}
 			if (input->isKey(DIK_D))
 			{
 				eye.x+= 0.1f;
-				camera->CameraMoveVector(eye);
+				camera->CameraMoveVector({ 1,0,0 });
 				object3d_camera->CameraMoveVector(eye);
 			}
 			if (input->isKey(DIK_Q))
 			{
 				eye.z-= 0.1f;
-				camera->CameraMoveVector2(eye);
+				camera->CameraMoveVector2({0,0,1});
 				object3d_camera->CameraMoveVector(eye);
 			}
 			if (input->isKey(DIK_E))
 			{
 				eye.z+= 0.1f;
-				camera->CameraMoveVector(eye);
+				camera->CameraMoveVector({ 0,0,1 });
 			}
 
 
@@ -406,7 +408,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			debugtext_minute2->Print(moji2, secound2_x, secound2_y + 60, 1.0f);
 			debugtext_minute2->Print(moji3, secound2_x, secound2_y + 110, 1.0f);
 
-		}
+		
 		camera->UpdateCamera();
 
 		object1->Update();

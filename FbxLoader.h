@@ -88,10 +88,20 @@ public://定数
 	//テクスチャ読み取り
 	void LoadTexture(ModelFbx* modelFbx, const std::string &fullPath);
 
+	/// <summary>
+	/// Fbxの行列をXMMATRIXに変換
+	/// </summary>
+	/// <param name="dst">書き込み先</param>
+	/// <param name="src">もととなるFBX行列</param>
+	static void ConvertMatrixFbx(XMMATRIX* dst, const FbxAMatrix& src);
+
 	//ディレクトリを含んだファイルパスからファイル名を抽出
 	std::string ExtractFileName(const std::string& path);
 
 	//テクスチャがない場合の標準テクスチャファイル名
 	static const string defaultTextureFileName;
+
+	//スキニング情報の読み取り
+	void ParseSkin(ModelFbx* modelFbx, FbxMesh* fbxMesh);
 
 };

@@ -10,6 +10,8 @@
 #include <DirectXMath.h>
 #include <string>
 
+#include "FbxLoader.h"
+
 class Object3dFbx
 {
 protected://エイリアス
@@ -80,4 +82,34 @@ public://メンバ変数
 	XMMATRIX matWorld;
 	//モデル
 	ModelFbx* modelFbx = nullptr;
+
+public://定数
+	//ボーンの最大値
+	static const int MAX_BONES = 32;// fbx hlsli と　一緒にする
+
+	//定数バッファ用データ構造体(スキニング)
+	struct ConstBufferDataSkin
+	{
+		XMMATRIX bones[MAX_BONES];
+	};
+
+	//定数バッファ(スキン)
+	ComPtr<ID3D12Resource> constBuffSkin;
+
+public: //animation
+	//1フレームの時間
+	FbxTime frameTime;
+	//アニメーション開始時間
+	FbxTime startTime;
+	//アニメーション終了時間
+	FbxTime endTime;
+	//現在時間(アニメーション)
+	FbxTime currentTime;
+	//アニメーション再生中
+	bool isPlay = false;
+
+	/// <summary>
+	/// アニメーション開始
+	/// </summary>
+	void PlayAnimation();
 };
