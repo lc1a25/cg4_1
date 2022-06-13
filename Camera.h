@@ -17,15 +17,20 @@ public:
 
 	void UpdateCamera();
 
-	void CameraMoveVector(XMFLOAT3 move);
+	void CameraMoveVector(XMFLOAT3 move, bool frag);
+
+	void CameraMoveVectorAdd(XMFLOAT3 move);
 
 
-	void CameraMoveVector2(XMFLOAT3 move);
+	void CameraMoveVectorSub(XMFLOAT3 move);
 
 	//getter
 	const XMMATRIX& GetMatViewProjection() { return matViewProjection; }
 
 	const XMFLOAT3& GetEye() { return eye; }
+	const float& GetEyex() { return eye.x; }
+	const float& GetEyey() { return eye.y; }
+	const float& GetEyez() { return eye.z; }
 	const XMFLOAT3& GetTarget() { return target; }
 
 	//setter
@@ -43,9 +48,9 @@ private:
 	// 射影行列
 	XMMATRIX matProjection;
 	// 視点座標
-	XMFLOAT3 eye = {0,0,-150};
+	XMFLOAT3 eye = {0,10,-10};
 	// 注視点座標
-	XMFLOAT3 target = { 0,20,0 };
+	XMFLOAT3 target = { 0,0,0 };
 	// 上方向ベクトル
 	XMFLOAT3 up = { 0,1,0 };
 

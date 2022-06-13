@@ -72,7 +72,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	DebugText* debugtext_minute = nullptr;
 	debugtext_minute = new DebugText();
 
-	Object3d::StaticInitialize(dxcommon->GetDev(), win->window_width, win->window_height);
+	//Object3d::StaticInitialize(dxcommon->GetDev(), win->window_width, win->window_height);
 
 	Object3dFbx::SetDevice(dxcommon->GetDev());
 
@@ -133,94 +133,94 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	object1->SetModelFbx(modelFbx);
 
 
-	Object3d* object3d_camera = nullptr;
+	//Object3d* object3d_camera = nullptr;
 
-	Model* model1 = Model::LoadFromOBJ("car1");
-	Model* model3 = Model::LoadFromOBJ("home3-0");
-	Model* model4 = Model::LoadFromOBJ("ene-0");
-	Model* model5 = Model::LoadFromOBJ("road");
-	Model* model7 = Model::LoadFromOBJ("home_white");
-	Model* model8 = Model::LoadFromOBJ("home_long");
-	Model* model9 = Model::LoadFromOBJ("glass");
+	//Model* model1 = Model::LoadFromOBJ("car1");
+	//Model* model3 = Model::LoadFromOBJ("home3-0");
+	//Model* model4 = Model::LoadFromOBJ("ene-0");
+	//Model* model5 = Model::LoadFromOBJ("road");
+	//Model* model7 = Model::LoadFromOBJ("home_white");
+	//Model* model8 = Model::LoadFromOBJ("home_long");
+	//Model* model9 = Model::LoadFromOBJ("glass");
 
 
 
-	//自機
-	Object3d* object3d_player = object3d_player->Create();
+	////自機
+	//Object3d* object3d_player = object3d_player->Create();
 
-	object3d_player->SetModel(model1);
+	//object3d_player->SetModel(model1);
 
-	object3d_player->SetPosition({ 0,-10,-20 });
-	object3d_player->rotation.y = -90;
-	//道
-	Object3d* object3d_roadCenter = object3d_roadCenter->Create();
-	Object3d* object3d_roadCenter2 = object3d_roadCenter2->Create();
-	Object3d* object3d_roadCenter3 = object3d_roadCenter3->Create();
+	//object3d_player->SetPosition({ 0,-10,-20 });
+	//object3d_player->rotation.y = -90;
+	////道
+	//Object3d* object3d_roadCenter = object3d_roadCenter->Create();
+	//Object3d* object3d_roadCenter2 = object3d_roadCenter2->Create();
+	//Object3d* object3d_roadCenter3 = object3d_roadCenter3->Create();
 
-	object3d_roadCenter->SetModel(model5);
-	object3d_roadCenter2->SetModel(model5);
-	object3d_roadCenter3->SetModel(model5);
+	//object3d_roadCenter->SetModel(model5);
+	//object3d_roadCenter2->SetModel(model5);
+	//object3d_roadCenter3->SetModel(model5);
 
-	object3d_roadCenter->SetPosition({ 0,-30,0 });
-	object3d_roadCenter->scale.z = 200;
-	object3d_roadCenter->scale.x = 20;
+	//object3d_roadCenter->SetPosition({ 0,-30,0 });
+	//object3d_roadCenter->scale.z = 200;
+	//object3d_roadCenter->scale.x = 20;
 
-	object3d_roadCenter2->SetPosition({ 0,-30,+800 });//z 400
-	object3d_roadCenter2->scale.z = 200;
-	object3d_roadCenter2->scale.x = 20;
+	//object3d_roadCenter2->SetPosition({ 0,-30,+800 });//z 400
+	//object3d_roadCenter2->scale.z = 200;
+	//object3d_roadCenter2->scale.x = 20;
 
-	object3d_roadCenter3->SetPosition({ 0,-30,+1600 });//z 400
-	object3d_roadCenter3->scale.z = 200;
-	object3d_roadCenter3->scale.x = 20;
-	//家
-	Object3d* object3d_home = object3d_home->Create();
-	Object3d* object3d_homeWhite = object3d_homeWhite->Create();
-	Object3d* object3d_homeLong = object3d_homeLong->Create();
+	//object3d_roadCenter3->SetPosition({ 0,-30,+1600 });//z 400
+	//object3d_roadCenter3->scale.z = 200;
+	//object3d_roadCenter3->scale.x = 20;
+	////家
+	//Object3d* object3d_home = object3d_home->Create();
+	//Object3d* object3d_homeWhite = object3d_homeWhite->Create();
+	//Object3d* object3d_homeLong = object3d_homeLong->Create();
 
-	object3d_home->SetModel(model3);
-	object3d_homeWhite->SetModel(model7);
-	object3d_homeLong->SetModel(model8);
+	//object3d_home->SetModel(model3);
+	//object3d_homeWhite->SetModel(model7);
+	//object3d_homeLong->SetModel(model8);
 
-	object3d_home->SetPosition({ -70,-10,0 });
-	object3d_home->rotation.y = 270;
-	object3d_homeWhite->SetPosition({ 90,-30,30 });
-	object3d_homeWhite->rotation.y = 90;
-	object3d_homeLong->SetPosition({ -90,-30,60 });
-	object3d_homeLong->rotation.y = 270;
+	//object3d_home->SetPosition({ -70,-10,0 });
+	//object3d_home->rotation.y = 270;
+	//object3d_homeWhite->SetPosition({ 90,-30,30 });
+	//object3d_homeWhite->rotation.y = 90;
+	//object3d_homeLong->SetPosition({ -90,-30,60 });
+	//object3d_homeLong->rotation.y = 270;
 
-	//敵
-	Object3d* object3d_eneCenter = object3d_eneCenter->Create();
+	////敵
+	//Object3d* object3d_eneCenter = object3d_eneCenter->Create();
 
-	object3d_eneCenter->SetModel(model4);
+	//object3d_eneCenter->SetModel(model4);
 
-	object3d_eneCenter->SetPosition({ 0,-15,+200 });
+	//object3d_eneCenter->SetPosition({ 0,-15,+200 });
 
-	Object3d* object3d_eneLeft = object3d_eneLeft->Create();
+	//Object3d* object3d_eneLeft = object3d_eneLeft->Create();
 
-	object3d_eneLeft->SetModel(model4);
+	//object3d_eneLeft->SetModel(model4);
 
-	object3d_eneLeft->SetPosition({ 0,-15,+50 });
+	//object3d_eneLeft->SetPosition({ 0,-15,+50 });
 
-	Object3d* object3d_eneRight = object3d_eneRight->Create();
+	//Object3d* object3d_eneRight = object3d_eneRight->Create();
 
-	object3d_eneRight->SetModel(model4);
+	//object3d_eneRight->SetModel(model4);
 
-	object3d_eneRight->SetPosition({ 35,-15,+400 });
+	//object3d_eneRight->SetPosition({ 35,-15,+400 });
 
-	//背景
-	Object3d* object3d_glass = object3d_glass->Create();
-	Object3d* object3d_glass2 = object3d_glass2->Create();
+	////背景
+	//Object3d* object3d_glass = object3d_glass->Create();
+	//Object3d* object3d_glass2 = object3d_glass2->Create();
 
-	object3d_glass->SetModel(model9);
-	object3d_glass2->SetModel(model9);
+	//object3d_glass->SetModel(model9);
+	//object3d_glass2->SetModel(model9);
 
-	object3d_glass->SetPosition({ -50,-30,0 });
-	object3d_glass->scale.x = 200;
-	object3d_glass->scale.z = 200;
+	//object3d_glass->SetPosition({ -50,-30,0 });
+	//object3d_glass->scale.x = 200;
+	//object3d_glass->scale.z = 200;
 
-	object3d_glass2->SetPosition({ -50,-30,780 });
-	object3d_glass2->scale.x = 200;
-	object3d_glass2->scale.z = 200;
+	//object3d_glass2->SetPosition({ -50,-30,780 });
+	//object3d_glass2->scale.x = 200;
+	//object3d_glass2->scale.z = 200;
 
 	//当たり判定　球
 	Sphere sphere;
@@ -248,9 +248,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	float xmfloat4_g = 1.0f;
 	float xmfloat4_a = 1.0f;
 
-	float ene_x2 = object3d_eneLeft->position.x;
-	float ene_y2 = object3d_eneLeft->position.y;
-	float ene_z2 = object3d_eneLeft->position.z;
+	//float ene_x2 = object3d_eneLeft->position.x;
+	//float ene_y2 = object3d_eneLeft->position.y;
+	//float ene_z2 = object3d_eneLeft->position.z;
 
 
 	char moji[64];
@@ -283,7 +283,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	
 #pragma endregion
 
-
+	object1->PlayAnimation();
 	while (true)  // ゲームループ
 	{
 		//// メッセージがある？
@@ -313,73 +313,49 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			XMVECTOR moveX2 = XMVectorSet(1.0f, 0, 0, 0);//debug
 
 		
-			object1->PlayAnimation();
+		
 
 			if (input->isKey(DIK_W))
 			{
-				eye.y+= 0.1f;
-				camera->CameraMoveVector({ 0,1,0 });
-				object3d_camera->CameraMoveVector(eye);
-				
-				
-
-			}
-			if (input->isKey(DIK_S))
-			{
-				
-				camera->CameraMoveVector2({ 0,1,0 });
-				object3d_camera->CameraMoveVector2(eye);
-		
-				
-			}
-			if (input->isKey(DIK_A))
-			{
-				eye.x-= 0.1f;
-				camera->CameraMoveVector2({ 1,0,0 });
-				object3d_camera->CameraMoveVector(eye);
+				camera->CameraMoveVector({ 0,1,0 },true);//カメラを動かす
 			}
 			if (input->isKey(DIK_D))
 			{
-				eye.x+= 0.1f;
-				camera->CameraMoveVector({ 1,0,0 });
-				object3d_camera->CameraMoveVector(eye);
+				camera->CameraMoveVector({ 1,0,0 },true);//カメラを動かす
+			}
+			if (input->isKey(DIK_A))
+			{
+				camera->CameraMoveVector({ 1,0,0 },false);//カメラを動かす
+			}
+			if (input->isKey(DIK_S))
+			{
+				camera->CameraMoveVector({ 0,1,0 },false);//カメラを動かす
 			}
 			if (input->isKey(DIK_Q))
 			{
-				eye.z-= 0.1f;
-				camera->CameraMoveVector2({0,0,1});
-				object3d_camera->CameraMoveVector(eye);
+				camera->CameraMoveVector({0,0,1},false);
 			}
 			if (input->isKey(DIK_E))
 			{
-				eye.z+= 0.1f;
-				camera->CameraMoveVector({ 0,0,1 });
+				camera->CameraMoveVector({ 0,0,1 },true);
 			}
 
-
-
-
 			//三角形の初期値を設定
-			triangle_ene2.p0 = XMVectorSet(ene_x2 - 1.0f, ene_y2, ene_z2, 1);//左手前
-			triangle_ene2.p1 = XMVectorSet(ene_x2, ene_y2, ene_z2 + 5.0f, 1);//左奥
-			triangle_ene2.p2 = XMVectorSet(ene_x2 + 1.0f, ene_y2, ene_z2, 1);//右手前
-			triangle_ene2.normal = XMVectorSet(0.0f, 1.0f, 0.0f, 0);//上向き
+			//triangle_ene2.p0 = XMVectorSet(ene_x2 - 1.0f, ene_y2, ene_z2, 1);//左手前
+			//triangle_ene2.p1 = XMVectorSet(ene_x2, ene_y2, ene_z2 + 5.0f, 1);//左奥
+			//triangle_ene2.p2 = XMVectorSet(ene_x2 + 1.0f, ene_y2, ene_z2, 1);//右手前
+			//triangle_ene2.normal = XMVectorSet(0.0f, 1.0f, 0.0f, 0);//上向き
 
 			bool hit_left = Collision::CheckSphere2Triangle(sphere, triangle_ene2);
 
 
-			sprintf_s(moji, "%2.1f", eye.y);
-			sprintf_s(moji2, "%2.1f", eye.x);
-			sprintf_s(moji3, "%2.1f",eye.z);
+			sprintf_s(moji, "%2.1f", camera->GetEyex());
+			sprintf_s(moji2, "%2.1f", camera->GetEyey());
+			sprintf_s(moji3, "%2.1f", camera->GetEyez());
 		
 
 
 	//当たり判定
-
-
-
-	
-
 			if (hit_left)
 			{
 				audio->PlayWave("powerdown07.wav");
@@ -407,66 +383,27 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			debugtext_minute->Print( moji, secound_x, secound_y, 1.0f);
 			debugtext_minute2->Print(moji2, secound2_x, secound2_y + 60, 1.0f);
 			debugtext_minute2->Print(moji3, secound2_x, secound2_y + 110, 1.0f);
-
-		
+	
 		camera->UpdateCamera();
 
 		object1->Update();
-
-		object3d_player->Update();
-		object3d_roadCenter->Update();
-		object3d_roadCenter2->Update();
-		object3d_roadCenter3->Update();
-
-		object3d_eneCenter->Update();
-		object3d_eneLeft->Update();
-		object3d_eneRight->Update();
-
-		object3d_glass->Update();
-		object3d_glass2->Update();
-
-		object3d_home->Update();
-		object3d_homeWhite->Update();
-		object3d_homeLong->Update();
 	
 		dxcommon->BeginDraw();
 
 		// ４．描画コマンドここから
 
-
-		//Object3d::PreDraw(dxcommon->GetCmdlist());
-
-		object1->Draw(dxcommon->GetCmdlist());
-		
-		/*object3d_player->Draw();
-		object3d_roadCenter->Draw();
-		object3d_roadCenter2->Draw();
-		object3d_roadCenter3->Draw();
-
-		object3d_eneCenter->Draw();
-		object3d_eneLeft->Draw();
-		object3d_eneRight->Draw();
-
-		object3d_glass->Draw();
-		object3d_glass2->Draw();
-
-		object3d_home->Draw();
-		object3d_homeWhite->Draw();
-		object3d_homeLong->Draw();
-
-		Object3d::PostDraw();*/
+		//object1->Draw(dxcommon->GetCmdlist());
 
 		////スプライト共通コマンド
-		spriteCommon->PreDraw();
+		//spriteCommon->PreDraw();
 
 		////スプライト描画
-//		sprite->Draw();
+		//sprite->Draw();
 
-
-		debugtext_minute->DrawAll();
-		debugtext_minute2->DrawAll();
+		//debugtext_minute->DrawAll();
+		//debugtext_minute2->DrawAll();
 		// ４．描画コマンドここまで
-		// 
+		
 		// ５．リソースバリアを戻す
 
 		dxcommon->EndDraw();
@@ -478,18 +415,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	delete modelFbx;
 	delete object1;
 
-	delete object3d_player;
-	delete object3d_roadCenter;
-	delete object3d_roadCenter2;
-	delete object3d_roadCenter3;
-	delete object3d_home;
-	delete object3d_homeWhite;
-	delete object3d_homeLong;
-	delete object3d_eneCenter;
-	delete object3d_eneLeft;
-	delete object3d_eneRight;
-	delete object3d_glass;
-	delete object3d_glass2;
+	//delete object3d_player;
+	//delete object3d_roadCenter;
+	//delete object3d_roadCenter2;
+	//delete object3d_roadCenter3;
+	//delete object3d_home;
+	//delete object3d_homeWhite;
+	//delete object3d_homeLong;
+	//delete object3d_eneCenter;
+	//delete object3d_eneLeft;
+	//delete object3d_eneRight;
+	//delete object3d_glass;
+	//delete object3d_glass2;
 
 	//Audio解放
 	audio->Finalize();
@@ -499,14 +436,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	debugtext_minute->Finalize();
 	delete debugtext_minute;
 
-
 	delete sprite;
 	delete spriteCommon;
 	FbxLoader::GetInstance()->Finalize();
 	delete dxcommon;
 	delete input;
-	
-	
 	
 	return 0;
 }

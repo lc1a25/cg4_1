@@ -208,6 +208,18 @@ void Object3dFbx::Init()
 
 void Object3dFbx::Update()
 {	
+	////アニメーション
+	if (isPlay)
+	{
+		//1フレーム進む
+		currentTime += frameTime;
+		//最後まで再生したら最初に戻す
+		if (currentTime > endTime)
+		{
+			currentTime = startTime;
+		}
+	}
+
 	XMMATRIX matScale, matRot, matTrans;
 
 	//スケール,回転,平行移動行列の計算
@@ -247,6 +259,7 @@ void Object3dFbx::Update()
 	//ボーン配列
 	std::vector<ModelFbx::Bone>& bones = modelFbx->GetBones();
 
+
 	//定数バッファへデータ転送
 	ConstBufferDataSkin* constMapSkin = nullptr;
 	result = constBuffSkin->Map(0, nullptr, (void**)&constMapSkin);
@@ -263,21 +276,8 @@ void Object3dFbx::Update()
 		constMapSkin->bones[i] = bones[i].invInitialPose * matCurrentPose;
 	}
 
-	////アニメーション
-	if (isPlay)
-	{
-		//1フレーム進む
-		currentTime += frameTime;
-		//最後まで再生したら最初に戻す
-		if (currentTime > endTime)
-		{
-			currentTime = startTime;
-		}
-	}
-
 	constBuffSkin->Unmap(0, nullptr);
 
-	
 }
 
 void Object3dFbx::Draw(ID3D12GraphicsCommandList* cmdList)
@@ -319,6 +319,4 @@ void Object3dFbx::PlayAnimation()
 	currentTime = startTime;
 	//再生中状態にする
 	isPlay = true;
-
-
 }
