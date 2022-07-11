@@ -407,10 +407,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		
 		
 
-		//postEffect->PreDrawScene(dxcommon->GetCmdlist());
+		postEffect->PreDrawScene(dxcommon->GetCmdlist());
 		
-		//object1->Draw(dxcommon->GetCmdlist());
-		//postEffect->PostDrawScene(dxcommon->GetCmdlist());
+		object1->Draw(dxcommon->GetCmdlist());
+		postEffect->PostDrawScene(dxcommon->GetCmdlist());
 		
 		dxcommon->BeginDraw();
 
@@ -418,21 +418,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	
 
-		object1->Draw(dxcommon->GetCmdlist());
+		//object1->Draw(dxcommon->GetCmdlist());
 
 		////スプライト共通コマンド
 		//postEffect->PreDrawScene(dxcommon->GetCmdlist());
 		//spriteCommon->PreDraw();//3-5で消す　パイプラインステートseisei
-		//postEffect->Draw(dxcommon->GetCmdlist());
+		postEffect->Draw(dxcommon->GetCmdlist());
 		//sprite->Draw();
 		//postEffect->PostDrawScene(dxcommon->GetCmdlist());
 
 		
 		
 		////スプライト描画
-		Object3d::PreDraw(dxcommon->GetCmdlist());
+		/*Object3d::PreDraw(dxcommon->GetCmdlist());
 		object3d_player->Draw();
-		Object3d::PostDraw();
+		Object3d::PostDraw();*/
 		//debugtext_minute->DrawAll();
 		//debugtext_minute2->DrawAll();
 		// ４．描画コマンドここまで

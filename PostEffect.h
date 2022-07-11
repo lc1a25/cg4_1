@@ -1,5 +1,7 @@
 #pragma once
 #include "Sprite.h"
+#include "Input.h"
+
 class PostEffect :
     public Sprite 
 {
@@ -19,6 +21,7 @@ public:
     /// </summary>
     PostEffect();
 
+    Input* input = nullptr;
     //画面クリアカラー
     static const float clearColor[4];
 
@@ -26,7 +29,7 @@ public:
     //static ID3D12Device* device;
 
     //テクスチャバッファ
-    ComPtr<ID3D12Resource> texBuff;
+    ComPtr<ID3D12Resource> texBuff[2];
     //SRV用デスクリプタヒープ
     ComPtr<ID3D12DescriptorHeap> descHeapSRV;
 
@@ -40,7 +43,7 @@ public:
     //グラフィックパイプライン
     ComPtr<ID3D12PipelineState>  pipelineState;
 
-    //
+    //ルートシグネチャ
     ComPtr<ID3D12RootSignature> rootSignature;
 
     /// <summary>
