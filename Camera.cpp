@@ -38,13 +38,18 @@ void Camera::UpdateCamera()
 	matViewProjection = matView * matProjection;
 }
 
-void Camera::CameraMoveVector(XMFLOAT3 move, bool frag)
+void Camera::CameraMoveVector(XMFLOAT3 move, bool addFrag)
 {
+	if (addFrag == false)
+	{
+		move.x = move.x * -1;
+		move.y = move.y * -1;
+		move.z = move.z * -1;
+	}
+
 	XMFLOAT3 eye_moved = GetEye();
 	XMFLOAT3 target_moved = GetTarget();
 
-	if (frag == true)
-	{
 		eye_moved.x += move.x;
 		eye_moved.y += move.y;
 		eye_moved.z += move.z;
@@ -52,17 +57,7 @@ void Camera::CameraMoveVector(XMFLOAT3 move, bool frag)
 		target_moved.x += move.x;
 		target_moved.y += move.y;
 		target_moved.z += move.z;
-	}
-	else
-	{
-		eye_moved.x -= move.x;
-		eye_moved.y -= move.y;
-		eye_moved.z -= move.z;
-
-		target_moved.x -= move.x;
-		target_moved.y -= move.y;
-		target_moved.z -= move.z;
-	}
+			
 	SetEye(eye_moved);
 	SetTarget(target_moved);
 }
