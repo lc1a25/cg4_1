@@ -17,7 +17,7 @@ public:
 
 	void UpdateCamera();
 
-	void CameraMoveVector(XMFLOAT3 move, bool frag);
+	void CameraMoveVector(XMFLOAT3 move, bool addFrag);
 
 	void CameraMoveVectorAdd(XMFLOAT3 move);
 

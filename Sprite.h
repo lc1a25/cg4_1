@@ -22,7 +22,11 @@ private: // エイリアス
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
-private:
+
+protected:
+
+	//頂点数
+	static const int vertNum = 4;
 
 	SpriteCommon* spriteCommon_ = nullptr;
 
@@ -84,6 +88,9 @@ public:
 		XMFLOAT4 color;//色
 		XMMATRIX mat;//3D変換行列
 	};
+
+	//コンストラクタ
+	//Sprite();
 
 	/// <summary>
 	/// スプライト生成処理

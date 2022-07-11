@@ -10,7 +10,7 @@
 #include <DirectXMath.h>
 #include <string>
 
-#include "FbxLoader.h"
+#include "LoadFbx.h"
 
 class Object3dFbx
 {

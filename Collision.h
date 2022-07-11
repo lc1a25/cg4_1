@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CollisionPrimitive.h"
+#include "CollisionBase.h"
 
 ///<summary>
 ///当たり判定ヘルパークラス

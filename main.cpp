@@ -18,7 +18,7 @@
 
 #include "Win.h"
 #include "DirectXCommon.h"
-#include "CollisionPrimitive.h"
+#include "CollisionBase.h"
 #include "Collision.h"
 
 #include "Sprite.h"
@@ -30,10 +30,12 @@
 #include "Audio.h"
 
 #include "fbxsdk.h"
-#include "FbxLoader.h"
+#include "LoadFbx.h"
 
 #include "Object3dFbx.h"
 #include "Camera.h"
+
+#include "PostEffect.h"
 
 
 #pragma comment(lib, "d3d12.lib")
@@ -72,7 +74,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	DebugText* debugtext_minute = nullptr;
 	debugtext_minute = new DebugText();
 
-	//Object3d::StaticInitialize(dxcommon->GetDev(), win->window_width, win->window_height);
+	Object3d::StaticInitialize(dxcommon->GetDev(), win->window_width, win->window_height);
 
 	Object3dFbx::SetDevice(dxcommon->GetDev());
 
@@ -92,12 +94,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	FbxManager* fbxManager = FbxManager::Create();
 
-	FbxLoader::GetInstance()->Init(dxcommon->GetDev());
+	LoadFbx::GetInstance()->Init(dxcommon->GetDev());
+
+	PostEffect* postEffect = nullptr;
 
 	// DirectX初期化処理　ここまで
 
 	//描画初期化処理　ここから
-	spriteCommon->LoadTexture(0, L"Resource/GE3_2.png");//評価課題の説明
+	spriteCommon->LoadTexture(0, L"Resource/background.png");
 
 	Sprite *sprite = Sprite::Create(spriteCommon,0);
 
@@ -115,6 +119,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	spriteCommon->LoadTexture(debugTextTexNumber4, L"Resource/ASC_White.png");
 	debugtext_minute2->debugTextInit(spriteCommon, debugTextTexNumber4);
 
+	//ポストエフェクト
+	//spriteCommon->LoadTexture(100, L"Resource/mimikkyu.jpg");
+
+	postEffect = new PostEffect();
+	postEffect->Init(spriteCommon,100, { 0.5f,0.5f }, false, false);
+
 
 	//音声読み込み
 	audio->LoadWave("powerdown07.wav");
@@ -127,7 +137,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	ModelFbx* modelFbx = nullptr;
 	Object3dFbx* object1 = nullptr;
 
-	modelFbx = FbxLoader::GetInstance()->LoadModelFile("boneTest");
+	modelFbx = LoadFbx::GetInstance()->LoadModelFile("boneTest");
 	object1 = new Object3dFbx;
 	object1->Init();
 	object1->SetModelFbx(modelFbx);
@@ -135,7 +145,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	//Object3d* object3d_camera = nullptr;
 
-	//Model* model1 = Model::LoadFromOBJ("car1");
+	Model* model1 = Model::LoadFromOBJ("car1");
 	//Model* model3 = Model::LoadFromOBJ("home3-0");
 	//Model* model4 = Model::LoadFromOBJ("ene-0");
 	//Model* model5 = Model::LoadFromOBJ("road");
@@ -146,12 +156,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
 	////自機
-	//Object3d* object3d_player = object3d_player->Create();
+	Object3d* object3d_player = object3d_player->Create();
 
-	//object3d_player->SetModel(model1);
+	object3d_player->SetModel(model1);
 
-	//object3d_player->SetPosition({ 0,-10,-20 });
-	//object3d_player->rotation.y = -90;
+	object3d_player->SetPosition({ 0,-10,-20 });
+	object3d_player->rotation.y = -90;
 	////道
 	//Object3d* object3d_roadCenter = object3d_roadCenter->Create();
 	//Object3d* object3d_roadCenter2 = object3d_roadCenter2->Create();
@@ -233,7 +243,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	sphere.radius = 10.0f;//半径
 
 
-	//FbxLoader::GetInstance()->LoadModelFile("cube");
+	//LoadFbx::GetInstance()->LoadModelFile("cube");
 
 #pragma endregion
 	//描画初期化処理　ここまで
@@ -274,8 +284,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	int gameScene = 1;
 
-	sprite->SetPosition({ 1040.0f,130.0f,0.0f });
-	sprite->SetTexsize({440.0f,250.0f });
+	sprite->SetPosition({ 0.0f,0.0f,0.0f });
+	sprite->SetTexsize({1280.0f,720.0f });
 
 	sprite->TransVertexBuffer();
 
@@ -313,31 +323,37 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			XMVECTOR moveX2 = XMVectorSet(1.0f, 0, 0, 0);//debug
 
 		
+			XMFLOAT3 xCamera = { 1,0,0 };
 		
+			XMFLOAT3 yCamera = { 0,1,0 };
+			
+			XMFLOAT3 zCamera = { 0,0,1 };
+			
+
 
 			if (input->isKey(DIK_W))
 			{
-				camera->CameraMoveVector({ 0,1,0 },true);//カメラを動かす
+				camera->CameraMoveVector(yCamera,true);//カメラを動かす
 			}
 			if (input->isKey(DIK_D))
 			{
-				camera->CameraMoveVector({ 1,0,0 },true);//カメラを動かす
+				camera->CameraMoveVector(xCamera,true);//カメラを動かす
 			}
 			if (input->isKey(DIK_A))
 			{
-				camera->CameraMoveVector({ 1,0,0 },false);//カメラを動かす
+				camera->CameraMoveVector(xCamera,false);//カメラを動かす
 			}
 			if (input->isKey(DIK_S))
 			{
-				camera->CameraMoveVector({ 0,1,0 },false);//カメラを動かす
+				camera->CameraMoveVector(yCamera,false);//カメラを動かす
 			}
 			if (input->isKey(DIK_Q))
 			{
-				camera->CameraMoveVector({0,0,1},false);
+				camera->CameraMoveVector(zCamera,false);
 			}
 			if (input->isKey(DIK_E))
 			{
-				camera->CameraMoveVector({ 0,0,1 },true);
+				camera->CameraMoveVector(zCamera,true);
 			}
 
 			//三角形の初期値を設定
@@ -383,23 +399,40 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			debugtext_minute->Print( moji, secound_x, secound_y, 1.0f);
 			debugtext_minute2->Print(moji2, secound2_x, secound2_y + 60, 1.0f);
 			debugtext_minute2->Print(moji3, secound2_x, secound2_y + 110, 1.0f);
-	
+			object3d_player->Update();
 		camera->UpdateCamera();
 
 		object1->Update();
-	
+
+		
+		
+
+		//postEffect->PreDrawScene(dxcommon->GetCmdlist());
+		
+		//object1->Draw(dxcommon->GetCmdlist());
+		//postEffect->PostDrawScene(dxcommon->GetCmdlist());
+		
 		dxcommon->BeginDraw();
 
 		// ４．描画コマンドここから
 
-		//object1->Draw(dxcommon->GetCmdlist());
+	
+
+		object1->Draw(dxcommon->GetCmdlist());
 
 		////スプライト共通コマンド
-		//spriteCommon->PreDraw();
-
-		////スプライト描画
+		//postEffect->PreDrawScene(dxcommon->GetCmdlist());
+		//spriteCommon->PreDraw();//3-5で消す　パイプラインステートseisei
+		//postEffect->Draw(dxcommon->GetCmdlist());
 		//sprite->Draw();
+		//postEffect->PostDrawScene(dxcommon->GetCmdlist());
 
+		
+		
+		////スプライト描画
+		Object3d::PreDraw(dxcommon->GetCmdlist());
+		object3d_player->Draw();
+		Object3d::PostDraw();
 		//debugtext_minute->DrawAll();
 		//debugtext_minute2->DrawAll();
 		// ４．描画コマンドここまで
@@ -415,7 +448,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	delete modelFbx;
 	delete object1;
 
-	//delete object3d_player;
+	delete object3d_player;
 	//delete object3d_roadCenter;
 	//delete object3d_roadCenter2;
 	//delete object3d_roadCenter3;
@@ -433,12 +466,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	delete audio;
 
 	//デバッグテキスト解放
+	delete postEffect;
+
 	debugtext_minute->Finalize();
 	delete debugtext_minute;
 
 	delete sprite;
 	delete spriteCommon;
-	FbxLoader::GetInstance()->Finalize();
+	LoadFbx::GetInstance()->Finalize();
 	delete dxcommon;
 	delete input;
 	

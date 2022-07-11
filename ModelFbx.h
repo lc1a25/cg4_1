@@ -35,7 +35,7 @@ class ModelFbx
 
 public:
 	//フレンドクラス
-	friend class FbxLoader;
+	friend class LoadFbx;
 
 public://bone
 	//ボーンインデックスの最大値

@@ -271,7 +271,7 @@ void Object3dFbx::Update()
 		FbxAMatrix fbxCurrentPose =
 			bones[i].fbxCluster->GetLink()->EvaluateGlobalTransform(currentTime);
 		//XMMATRIXに変換
-		FbxLoader::ConvertMatrixFbx(&matCurrentPose, fbxCurrentPose);
+		LoadFbx::ConvertMatrixFbx(&matCurrentPose, fbxCurrentPose);
 		//合成してスキニング行列
 		constMapSkin->bones[i] = bones[i].invInitialPose * matCurrentPose;
 	}

@@ -14,7 +14,6 @@ void Sprite::Init(SpriteCommon* spriteCommon, UINT texnumber, XMFLOAT2 anchorpoi
 {
 	HRESULT result = S_FALSE;
 
-
 	spriteCommon_ = spriteCommon;
 
 	texnumber_ = texnumber;
